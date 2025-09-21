@@ -1,0 +1,80 @@
+# PrahariAI – Where Identity Meets Integrity
+
+**PrahariAI** is a scalable, AI-powered system designed to detect and report fake accounts across major social platforms. Built for national security agencies like ITBP, MHA, and CERT-In, it empowers digital guardianship by identifying impersonation, misinformation, and bot-driven threats.
+
+---
+
+## 🛡️ Mission
+
+To protect digital borders, preserve operational integrity, and build public trust in online communication. PrahariAI stands as a sentinel in cyberspace—where identity meets integrity.
+
+---
+
+## 🔍 Key Features
+
+- **Multi-Platform Detection**  
+  Scans Twitter, Instagram, and other platforms for suspicious accounts using metadata, behavior, and content signals.
+
+- **Trust Scoring Engine**  
+  Assigns risk scores based on account age, follower patterns, image reuse, and posting behavior.
+
+- **Blockchain-Backed Evidence Logs**  
+  Stores immutable records of flagged accounts and actions taken for legal and audit purposes.
+
+- **Agency Dashboards**  
+  Role-based access for ITBP, MHA, CERT-In, and other bodies to monitor, report, and escalate threats.
+
+- **Automated Takedown API**  
+  Sends structured reports to social platforms with SLA tracking and escalation protocols.
+
+---
+
+## 🧱 Architecture Overview
+
+- **Detection Engine**: Rule-based filters + ML classifiers  
+- **NLP Module**: Flags impersonation and spam content  
+- **Reverse Image Search**: Identifies reused or stolen profile pictures  
+- **Dashboard UI**: Modular, scalable, and secure  
+- **Blockchain Ledger**: Verifiable action history across agencies
+
+---
+
+## 🚀 Current Status
+
+**Phase 1: Detection Engine Development**  
+- ✅ Feature list finalized  
+- 🔄 Sample data collection in progress  
+- 🔜 Rule-based filters and ML model under construction
+
+---
+
+## 📦 Installation (Coming Soon)
+
+Setup instructions, dependencies, and environment configuration will be added once the prototype is ready.
+
+---
+
+## 📘 License
+
+This project is licensed under the **Apache License 2.0** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
+
+**Alok Kumar Gautam**  
+IndiaSkills 2025 Competitor  
+Developer – Intelligent Security Technology  
+Sheikhpura, Bihar, India
+
+---
+
+## 🤝 Contributing
+
+Interested in collaborating? Fork the repo, raise an issue, or reach out via [LinkedIn](https://www.linkedin.com/in/webdevloperalokgautam/) . Contributions are welcome from ethical hackers, AI engineers, and policy experts.
+
+---
+
+## 📣 Acknowledgments
+
+Special thanks to mentors, reviewers, and the Indo-Tibetan Border Police for inspiring this mission. PrahariAI is built not just with code—but with care, courage, and conviction.
