@@ -1,7 +1,14 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { ScanResult, ThreatLevel, SuspectProfile, Platform } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey = process.env.API_KEY || '';
+
+// Initialize safely. If key is missing, calls will fail but app won't crash on load.
+if (!apiKey) {
+  console.warn("PrahariAI: process.env.API_KEY is not set. AI features will not function.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 export const analyzeProfile = async (
   username: string,
