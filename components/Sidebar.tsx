@@ -1,12 +1,14 @@
+
 import React from 'react';
 import { ShieldAlert, LayoutDashboard, ScanEye, FileText, Settings, LogOut, Activity } from 'lucide-react';
 
 interface SidebarProps {
   activeView: string;
   setView: (view: string) => void;
+  onLogout: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeView, setView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, onLogout }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Command Center', icon: LayoutDashboard },
     { id: 'scan', label: 'Threat Detection', icon: ScanEye },
@@ -50,7 +52,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setView }) => {
           <Settings className="w-5 h-5" />
           <span>Settings</span>
         </button>
-        <button className="w-full flex items-center space-x-3 px-4 py-2 text-red-400 hover:text-red-300 transition-colors">
+        <button 
+          onClick={onLogout}
+          className="w-full flex items-center space-x-3 px-4 py-2 text-red-400 hover:text-red-300 transition-colors"
+        >
           <LogOut className="w-5 h-5" />
           <span>Logout</span>
         </button>
