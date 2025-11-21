@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ShieldCheck, Lock, User, Mail, ArrowRight, ShieldAlert, Key } from 'lucide-react';
+import { ShieldCheck, Lock, User, Mail, ArrowRight, ShieldAlert, Globe } from 'lucide-react';
 
 interface AuthProps {
   onLogin: () => void;
@@ -9,6 +9,7 @@ interface AuthProps {
 const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
   
   // Form State
   const [email, setEmail] = useState('');
@@ -25,6 +26,15 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
       setLoading(false);
       onLogin();
     }, 1500);
+  };
+
+  const handleDemoLogin = () => {
+    setDemoLoading(true);
+    // Faster entry for demo mode
+    setTimeout(() => {
+        setDemoLoading(false);
+        onLogin();
+    }, 800);
   };
 
   return (
@@ -56,9 +66,9 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
               {isLogin ? 'Secure Login' : 'Agent Registration'}
             </h2>
             <div className="flex items-center gap-2 px-3 py-1 bg-slate-900/50 rounded-full border border-slate-700">
-              <div className={`w-2 h-2 rounded-full ${loading ? 'bg-yellow-500 animate-ping' : 'bg-green-500'}`}></div>
+              <div className={`w-2 h-2 rounded-full ${loading || demoLoading ? 'bg-yellow-500 animate-ping' : 'bg-green-500'}`}></div>
               <span className="text-[10px] uppercase tracking-wider text-slate-400">
-                {loading ? 'Verifying' : 'System Secure'}
+                {loading || demoLoading ? 'Verifying' : 'System Secure'}
               </span>
             </div>
           </div>
@@ -74,7 +84,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 p-2.5 outline-none transition-all"
+                    className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block pl-10 p-2.5 outline-none transition-all"
                   />
                 </div>
                 <div className="relative">
@@ -85,7 +95,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     required
                     value={agencyCode}
                     onChange={(e) => setAgencyCode(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 p-2.5 outline-none transition-all"
+                    className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block pl-10 p-2.5 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -99,7 +109,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 p-2.5 outline-none transition-all"
+                className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block pl-10 p-2.5 outline-none transition-all"
               />
             </div>
 
@@ -111,13 +121,13 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 p-2.5 outline-none transition-all"
+                className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block pl-10 p-2.5 outline-none transition-all"
               />
             </div>
 
             <button 
               type="submit"
-              disabled={loading}
+              disabled={loading || demoLoading}
               className="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300/50 font-medium rounded-lg text-sm px-5 py-3 text-center transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
             >
               {loading ? (
@@ -130,6 +140,30 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
               )}
             </button>
           </form>
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-700"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-2 bg-slate-800 text-slate-500">OR</span>
+            </div>
+          </div>
+
+          <button 
+            onClick={handleDemoLogin}
+            disabled={loading || demoLoading}
+            className="w-full flex items-center justify-center gap-2 text-slate-300 bg-slate-700 hover:bg-slate-600 font-medium rounded-lg text-sm px-5 py-3 text-center transition-all disabled:opacity-50"
+          >
+            {demoLoading ? (
+                <span className="animate-pulse">Initializing Demo Environment...</span>
+            ) : (
+                <>
+                    <Globe className="w-4 h-4" />
+                    Enter as Guest (Demo Mode)
+                </>
+            )}
+          </button>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-slate-400">
@@ -154,3 +188,4 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 };
 
 export default Auth;
+
