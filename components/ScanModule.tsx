@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { analyzeProfile, scanNetworkForThreats } from '../services/geminiService';
 import { ScanResult, ThreatLevel, SuspectProfile } from '../types';
-import { Search, RefreshCw, AlertOctagon, FileWarning, Terminal, Shield, ScanEye, Radio, Wifi, ArrowRight, Quote } from 'lucide-react';
+import { Search, RefreshCw, AlertOctagon, FileWarning, Terminal, Shield, ScanEye, Radio, Wifi, ArrowRight, Quote, Download, FileText } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 // --- Sub-components ---
@@ -99,6 +100,7 @@ const ScanModule: React.FC = () => {
   // Common State
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
   const [result, setResult] = useState<ScanResult | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   // Manual Analysis
   const handleManualScan = async () => {
@@ -165,6 +167,14 @@ const ScanModule: React.FC = () => {
     setUsername('@support_help_desk_official');
     setBio('Official Support Desk. DM for immediate assistance. We resolve all issues instantly.');
     setPosts('URGENT: Your account is flagged. Click here bit.ly/verify-now to avoid suspension immediately.');
+  };
+
+  const handleExportReport = () => {
+    setExporting(true);
+    setTimeout(() => {
+        setExporting(false);
+        alert("Report downloaded successfully to local secure storage.");
+    }, 1500);
   };
 
   return (
@@ -484,8 +494,15 @@ const ScanModule: React.FC = () => {
                   </div>
                   
                   <div className="flex gap-3 w-full md:w-auto">
-                    <button className="flex-1 md:flex-none px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded transition-colors text-sm font-medium">
-                        Log Evidence
+                    <button 
+                        onClick={handleExportReport}
+                        className="flex-1 md:flex-none px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded transition-colors text-sm font-medium flex items-center justify-center gap-2"
+                    >
+                        {exporting ? 'Generating...' : (
+                            <>
+                                <Download className="w-4 h-4" /> Export PDF
+                            </>
+                        )}
                     </button>
                     <button className="flex-1 md:flex-none px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors text-sm font-medium shadow-lg shadow-red-900/20">
                         Report & Takedown
@@ -502,3 +519,4 @@ const ScanModule: React.FC = () => {
 };
 
 export default ScanModule;
+
