@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { ScanResult, ThreatLevel, SuspectProfile, Platform } from "../types";
 
@@ -21,43 +22,48 @@ export const analyzeProfile = async (
     properties: {
       trustScore: {
         type: Type.NUMBER,
-        description: "A score from 0 to 100 indicating how trustworthy the profile is. 100 is very trustworthy, 0 is a fake/bot.",
+        description: "A score from 0 to 100. 100 is verified/safe, 0 is confirmed bot/malicious.",
       },
       isSuspicious: {
         type: Type.BOOLEAN,
-        description: "Whether the account is likely fake or malicious.",
+        description: "Boolean flag for immediate threat tagging.",
       },
       flags: {
         type: Type.ARRAY,
         items: { type: Type.STRING },
-        description: "List of specific indicators of suspicion (e.g., 'Generic Bio', 'Bot-like syntax', 'Inflammatory keywords').",
+        description: "Technical indicators (e.g., 'High Entropy Username', 'Botnet Coordination', 'Scam Pattern Match').",
       },
       analysis: {
         type: Type.STRING,
-        description: "A brief summary explaining the reasoning behind the score.",
+        description: "Technical justification for the score. Use cyber-security terminology.",
       },
       threatLevel: {
         type: Type.STRING,
-        description: "Categorize as Low, Medium, High, or Critical based on potential for misinformation or harm.",
+        description: "Categorize as Low, Medium, High, or Critical.",
       },
       suggestedAction: {
         type: Type.STRING,
-        description: "Recommended action (e.g., 'Monitor', 'Report', 'Immediate Takedown').",
+        description: "Operational next steps (e.g., 'Monitor', 'Report to Cyber Cell', 'Immediate Takedown').",
       }
     },
     required: ["trustScore", "isSuspicious", "flags", "analysis", "threatLevel", "suggestedAction"],
   };
 
   const prompt = `
-    Analyze the following social media profile data for authenticity and threat potential.
-    The system is PrahariAI, designed for national security agencies to detect fake accounts, impersonation, and bots.
+    You are PrahariAI, an elite cybersecurity AI agent for the National Security Cyber Cell.
+    Your task is to detect bots, impersonators, and disinformation agents.
+    
+    Analyze the following profile metadata:
+    User Handle: ${username}
+    Bio String: ${bio}
+    Content Vector: ${recentPosts}
 
-    Username: ${username}
-    Bio: ${bio}
-    Recent Content/Context: ${recentPosts}
-
-    Provide a JSON response evaluating if this is a fake account, bot, or malicious actor.
-    Consider patterns of misinformation, impersonation of officials, or bot-like repetitive behavior.
+    Be strict. Look for:
+    1. Impersonation of government officials or support desks.
+    2. Urgency cues (phishing).
+    3. Bot-like repetitive syntax or crypto-scam keywords.
+    
+    Output strictly in JSON.
   `;
 
   try {
@@ -67,6 +73,7 @@ export const analyzeProfile = async (
       config: {
         responseMimeType: "application/json",
         responseSchema: schema,
+        temperature: 0.3, // Lower temperature for more deterministic/analytical results
       },
     });
 
@@ -120,15 +127,15 @@ export const scanNetworkForThreats = async (topic: string): Promise<SuspectProfi
   };
 
   const prompt = `
-    Simulate a social media network scan. 
-    Generate 3 realistic but fictional 'suspicious' social media profiles related to the topic: "${topic}".
+    Simulate a threat detection scan for the topic: "${topic}". 
+    Generate 3 highly realistic, dangerous profiles that would flag a national security system.
     
-    These profiles should look like:
-    1. Bots spreading propaganda.
-    2. Impersonators of officials.
-    3. Scammers.
+    Profiles should include:
+    1. An impersonator of a relevant authority figure or support channel.
+    2. A bot spreading polarized disinformation.
+    3. A financial scammer exploiting the topic.
     
-    Vary the platforms between Twitter, Instagram, Facebook, and Telegram.
+    Make the usernames and bios look authentic to the platform (e.g., use 'Official' in fake names).
   `;
 
   try {
@@ -138,6 +145,7 @@ export const scanNetworkForThreats = async (topic: string): Promise<SuspectProfi
       config: {
         responseMimeType: "application/json",
         responseSchema: schema,
+        temperature: 0.7,
       },
     });
 
@@ -155,3 +163,4 @@ export const scanNetworkForThreats = async (topic: string): Promise<SuspectProfi
     return [];
   }
 };
+
