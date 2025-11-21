@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
@@ -9,14 +9,19 @@ import BotnetGraph from './components/BotnetGraph';
 import Auth from './components/Auth';
 
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Initialize state from localStorage to persist login across refreshes
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('prahari_auth') === 'true';
+  });
   const [activeView, setActiveView] = useState('dashboard');
 
   const handleLogin = () => {
+    localStorage.setItem('prahari_auth', 'true');
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('prahari_auth');
     setIsLoggedIn(false);
     setActiveView('dashboard');
   };
@@ -55,4 +60,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
