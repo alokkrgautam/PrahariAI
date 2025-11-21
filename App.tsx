@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import ScanModule from './components/ScanModule';
 import EvidenceLog from './components/EvidenceLog';
+import BotnetGraph from './components/BotnetGraph';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState('dashboard');
@@ -16,6 +17,8 @@ const App: React.FC = () => {
         return <ScanModule />;
       case 'evidence':
         return <EvidenceLog />;
+      case 'network':
+        return <BotnetGraph />;
       default:
         return <Dashboard />;
     }
