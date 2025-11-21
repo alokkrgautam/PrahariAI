@@ -310,7 +310,7 @@ const ScanModule: React.FC = () => {
 
             {/* Terminal Output */}
             <div className="mt-6 flex-1 bg-black/50 rounded-lg p-4 font-mono text-xs text-green-400 overflow-y-auto border border-slate-800 shadow-inner">
-               {scanLog.length === 0 && <span className="text-slate-600">>> System Ready. Awaiting command.</span>}
+               {scanLog.length === 0 && <span className="text-slate-600">&gt;&gt; System Ready. Awaiting command.</span>}
                {scanLog.map((log, i) => (
                  <div key={i} className="mb-1">
                    <span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> {log}
